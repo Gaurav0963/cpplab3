@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C++ Theory: Classes & Objects</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .prose {
+            max-width: 65ch;
+            color: #334155; /* slate-700 */
+        }
+        .prose h2 {
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-top: 2em;
+            margin-bottom: 1em;
+            padding-bottom: 0.3em;
+            border-bottom: 1px solid #e2e8f0; /* slate-200 */
+        }
+        .prose h3 {
+            font-size: 1.25em;
+            font-weight: 600;
+            margin-top: 1.6em;
+            margin-bottom: 0.6em;
+        }
+        .prose p, .prose ul {
+            line-height: 1.6;
+        }
+        .prose strong {
+            color: #1e293b; /* slate-800 */
+        }
+        .code-block {
+            background-color: #1e293b; /* slate-800 */
+            color: #e2e8f0; /* slate-200 */
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+            white-space: pre;
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-stone-50 text-slate-800">
+
+    <nav class="bg-slate-800 text-white p-4 mb-8 shadow-md">
+        <div class="container mx-auto px-4">
+            <a href="questions.html" class="font-bold hover:text-teal-300">← Back to Questions</a>
+        </div>
+    </nav>
+
+    <main class="container mx-auto p-4 sm:p-6 md:p-8">
+        <div class="prose mx-auto">
+            <h2>C++ Theory: Classes and Objects</h2>
+            <p>This document explains the fundamental concepts of Object-Oriented Programming (OOP) used in the C++ examples.</p>
+
+            <h3>What is a Class?</h3>
+            <p>A <strong>class</strong> is a blueprint for creating objects. It's a user-defined data type that bundles data (variables) and functions (methods) that operate on that data into a single unit. Think of it like the architectural plan for a house. The plan defines the properties of the house (e.g., number of rooms, color of walls) and what you can do with it (e.g., open a door, turn on a light), but it isn't the house itself.</p>
+            <p>In C++, a class is defined using the <code>class</code> keyword.</p>
+            <div class="code-block">class Car {
+    // Members go here
+};</div>
+
+            <h3>What is an Object?</h3>
+            <p>An <strong>object</strong> is an instance of a class. If a class is the blueprint, an object is the actual house built from that blueprint. When you create an object, the program allocates memory to store its specific data. You can create many objects from the same class, and each one will have its own copy of the member variables.</p>
+            <div class="code-block">// 'myCar' is an object (an instance) of the 'Car' class.
+Car myCar;</div>
+
+            <h3>Access Specifiers: `public` and `private`</h3>
+            <p>Access specifiers are keywords that set the accessibility of class members. This is a core part of <strong>encapsulation</strong>, which is about bundling data and the methods that operate on that data together, while restricting direct access to some of the object's components.</p>
+            <ul>
+                <li><strong><code>public</code></strong>: Members declared as <code>public</code> can be accessed from anywhere outside the class. Public members form the <strong>"interface"</strong> of the class—the set of functions that code outside the class can use to interact with the object.</li>
+                <li><strong><code>private</code></strong>: Members declared as <code>private</code> can only be accessed by other member functions <strong>inside the same class</strong>. They are completely hidden from the outside world. This protects the object's data from accidental modification. By default, all members of a class are <code>private</code>.</li>
+            </ul>
+            <p><strong>A Clear Example:</strong></p>
+            <p>This example shows how <code>public</code> members can be accessed directly, while <code>private</code> members cannot.</p>
+            <div class="code-block">#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+class Dog {
+private:
+    // This variable is private. It can only be accessed by member functions of the Dog class.
+    std::string secretDogName; 
+
+public:
+    // This variable is public. It can be accessed from anywhere, including main().
+    std::string publicDogBreed;
+
+    // A public function to set the private name
+    void setSecretName(std::string name) {
+        secretDogName = name;
+    }
+
+    // A public function that can access the private name
+    void bark() {
+        std::cout << secretDogName << " says: Woof!" << std::endl;
+    }
+};
+
+int main() {
+    Dog myDog;
+
+    // Accessing a PUBLIC member is allowed.
+    myDog.publicDogBreed = "Golden Retriever";
+    std::cout << "The dog's breed is: " << myDog.publicDogBreed << std::endl;
+
+    // ERROR! You cannot directly access a PRIVATE member from main().
+    // The line below will cause a compile-time error if you uncomment it.
+    // myDog.secretDogName = "Rex"; // COMPILE ERROR!
+
+    // You must use a PUBLIC member function to interact with the private member.
+    myDog.setSecretName("Rex");
+    myDog.bark(); // The public function 'bark' can access the private name.
+    
+    return 0;
+}</div>
+
+            <h3>Member Variables and Member Functions</h3>
+            <ul>
+                <li><strong>Member Variables (Attributes)</strong>: These are the variables declared inside a class. They represent the data or properties of an object. In the <code>Rectangle</code> class, <code>length</code> and <code>width</code> are member variables.</li>
+                <li><strong>Member Functions (Methods)</strong>: These are the functions declared inside a class. They define the behavior of an object—the actions it can perform. They typically operate on the member variables of the class. In the <code>Rectangle</code> class, <code>setDimensions()</code> and <code>calculateArea()</code> are member functions.</li>
+            </ul>
+
+            <h3>Getters and Setters: The Gatekeepers of Your Data</h3>
+            <p>Because member variables are <code>private</code>, we need a safe and controlled way to interact with them. We use public "gatekeeper" functions for this.</p>
+            <ul>
+                <li><strong>Setter (or Mutator)</strong>: A public function used to <strong>modify</strong> the value of a private member variable. Its most important job is to <strong>protect</strong> the variable by allowing you to add rules or validation logic.</li>
+                <li><strong>Getter (or Accessor)</strong>: A public function used to <strong>retrieve</strong> or read the value of a private member variable. It provides safe, <strong>read-only</strong> access.</li>
+            </ul>
+            <p><strong>A Clear Example:</strong></p>
+            <p>Imagine we have a <code>Student</code> class and we want to make sure the student's age can never be a negative number.</p>
+            <div class="code-block">#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+class Student {
+private:
+    int age; // This is private. We want to protect it.
+
+public:
+    // This is the SETTER. It's our public "gatekeeper" function.
+    void setAge(int newAge) {
+        if (newAge > 0) {
+            age = newAge;
+        } else {
+            std::cout << "Invalid input! Age must be a positive number." << std::endl;
+        }
+    }
+
+    // This is the GETTER. It's a public "window" to our private data.
+    int getAge() {
+        return age;
+    }
+};
+
+int main() {
+    Student student1;
+
+    // ERROR! You cannot do this because 'age' is private.
+    // student1.age = 21; // This line would cause a compile error.
+
+    // You MUST use the public setter function.
+    std::cout << "Setting age to 21..." << std::endl;
+    student1.setAge(21);
+    std::cout << "The student's age is: " << student1.getAge() << std::endl;
+
+    std::cout << "\nAttempting to set age to -7..." << std::endl;
+    student1.setAge(-7); // The setter's rule will reject this.
+    
+    std::cout << "The student's age is still: " << student1.getAge() << std::endl;
+    
+    return 0;
+}</div>
+            <p>By using a setter (<code>setAge</code>), we gained control over our data and prevented it from becoming corrupted with an invalid value. The getter (<code>getAge</code>) provided a safe way to read the data. This is the core idea of encapsulation.</p>
+        </div>
+    </main>
+
+    <footer class="text-center mt-8 mb-8">
+        <a href="questions.html" class="text-teal-600 font-semibold hover:underline">← Back to the Questions Page</a>
+    </footer>
+
+</body>
+</html>
